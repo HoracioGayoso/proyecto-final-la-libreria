@@ -1,0 +1,8 @@
+# Ignorar directorios y archivos de configuración
+node_modules/
+dist/
+src/config/serviceAccountKey.json
+
+# Ignorar archivos de registro y variables de entorno
+*.log
+.env
