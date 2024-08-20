@@ -7,7 +7,12 @@
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts",
     "watch": "tsc -w",
-    "start:dev": "nodemon src/index.ts"
+    "start:dev": "nodemon src/index.ts",
+    "knex:migrate": "knex migrate:latest --knexfile ./knexfile.ts",
+    "knex:migrate:rollback": "knex migrate:rollback --knexfile ./knexfile.ts",
+    "knex:seed": "knex seed:run --knexfile ./knexfile.ts",
+    "knex:migrate:make": "knex migrate:make --knexfile ./knexfile.ts",
+    "knex:seed:make": "knex seed:make --knexfile ./knexfile.ts"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
