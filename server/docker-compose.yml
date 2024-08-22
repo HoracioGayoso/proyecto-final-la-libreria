@@ -9,7 +9,7 @@ services:
     environment:
       POSTGRES_USER: postgres   # Usuario de la base de datos
       POSTGRES_PASSWORD: postgres # Contraseña del usuario
-      POSTGRES_DB: la-liberia     # Nombre de la base de datos inicial
+      POSTGRES_DB: la-libreria     # Nombre de la base de datos inicial
     volumes:
       - postgres_data:/var/lib/postgresql/data # Persistencia de datos entre reinicios
 

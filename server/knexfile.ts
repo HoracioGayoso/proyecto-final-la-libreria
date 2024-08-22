@@ -8,7 +8,7 @@ const config: { [key: string]: Knex.Config } = {
       port: 5432,              // Puerto de PostgreSQL (el mismo que mapeaste en Docker)
       user: 'postgres',        // Usuario de la base de datos
       password: 'postgres',    // Contraseña del usuario
-      database: 'la-liberia'   // Nombre de la base de datos
+      database: 'la-libreria'   // Nombre de la base de datos
     },
     migrations: {
       tableName: 'knex_migrations',
