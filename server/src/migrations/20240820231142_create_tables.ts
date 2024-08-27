@@ -36,6 +36,7 @@ export async function up(knex: Knex): Promise<void> {
       table.uuid('categoria_id').references('id').inTable('Categoria');
       table.uuid('proveedor_id').references('id').inTable('Proveedor');
       table.string('imagen');
+      table.boolean('activo').defaultTo(true);
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
