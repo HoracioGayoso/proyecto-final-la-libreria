@@ -1,4 +1,3 @@
-// src/types/express/index.d.ts
 import express from "express";
 
 export interface DecodedIdToken {

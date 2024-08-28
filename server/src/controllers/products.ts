@@ -1,6 +1,7 @@
 // ./src/controllers/products.ts
 import { Request, Response, NextFunction } from 'express';
 import * as databaseOperations from '../services/exportOperations';
+import { ProductoFiltro } from '../@types/controller';
 
 // Obtener todos los productos
 export const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
@@ -30,7 +31,7 @@ export const getProductById = async (req: Request, res: Response, next: NextFunc
 // Filtrar productos por columna
 export const filterProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const filter = req.query;
+    const filter: ProductoFiltro = req.query;
     const products = await databaseOperations.filterProducts(filter);
     res.json(products);
   } catch (error) {
