@@ -12,11 +12,11 @@ export const getAllProducts = async () => {
 };
 
 // Obtener un único producto por ID
-export const getProductById = async (id: string) => {
+export const getProductByCodigoBarra = async (codigo_barra: string) => {
   try {
-    return await dbConnection('Producto').where({ id }).first();
+    return await dbConnection('Producto').where({ codigo_barra }).first();
   } catch (error) {
-    console.error(`Error obteniendo el producto con ID ${id}:`, error);
+    console.error(`Error obteniendo el producto con codigo de barra: ${codigo_barra}`, error);
     throw error;
   }
 };

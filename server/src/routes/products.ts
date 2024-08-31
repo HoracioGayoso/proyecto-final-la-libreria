@@ -3,11 +3,12 @@ import { Router, Request, Response, NextFunction } from 'express';
 import authenticate from '../middlewares/auth';
 import {
   getAllProducts,
-  getProductById,
+  getProductByCodigoBarra,
   filterProducts,
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  getProductByCodigoBarra
 } from '../controllers/products';
 
 const router = Router();
@@ -19,8 +20,8 @@ router.get('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Obtener un único producto por ID
-router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
-  getProductById(req, res, next);
+router.get('/:codigo_barra', (req: Request, res: Response, next: NextFunction) => {
+  getProductByCodigoBarra(req, res, next);
 });
 
 // Filtrar productos por columna
@@ -34,12 +35,12 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
 });
 
 // Modificar un producto
-router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
+router.put('/:codigo_barra', (req: Request, res: Response, next: NextFunction) => {
   updateProduct(req, res, next);
 });
 
 // Eliminar un producto
-router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
+router.delete('/:codigo_barra', (req: Request, res: Response, next: NextFunction) => {
   deleteProduct(req, res, next);
 });
 

@@ -13,11 +13,11 @@ export const getAllProducts = async (req: Request, res: Response, next: NextFunc
   }
 };
 
-// Obtener un único producto por ID
-export const getProductById = async (req: Request, res: Response, next: NextFunction) => {
+// Obtener un único producto por codigo de barra
+export const getProductByCodigoBarra = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
-    const product = await databaseOperations.getProductById(id);
+    const { codigo_barra } = req.params;
+    const product = await databaseOperations.getProductByCodigoBarra(codigo_barra);
     if (product) {
       res.json(product);
     } else {
@@ -53,9 +53,9 @@ export const addProduct = async (req: Request, res: Response, next: NextFunction
 // Modificar un producto
 export const updateProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
+    const { codigo_barra } = req.params;
     const updatedProduct = req.body;
-    const [product] = await databaseOperations.updateProduct(id, updateProduct);
+    const [product] = await databaseOperations.updateProduct(codigo_barra, updatedProduct);
     if (product) {
       res.json(product);
     } else {
@@ -69,8 +69,8 @@ export const updateProduct = async (req: Request, res: Response, next: NextFunct
 // Eliminar un producto
 export const deleteProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { id } = req.params;
-    const deletedProduct = await databaseOperations.deleteProduct(id);
+    const { codigo_barra } = req.params;
+    const deletedProduct = await databaseOperations.deleteProduct(codigo_barra);
     if (deletedProduct){
         res.status(204).json({ message: 'Producto eliminado' });
     } else {
