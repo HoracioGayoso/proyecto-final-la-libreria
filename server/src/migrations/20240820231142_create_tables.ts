@@ -56,7 +56,7 @@ export async function up(knex: Knex): Promise<void> {
     })
     .createTable('Servicio', table => {
       table.uuid('id').primary();
-      table.uuid('client_id').references('id').inTable('Usuario');
+      table.uuid('cliente_id').references('id').inTable('Usuario');
       table.string('nombre');
       table.text('descripcion');
       table.decimal('precio');
