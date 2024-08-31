@@ -73,6 +73,7 @@ export async function seed(knex: Knex): Promise<void> {
         
     ]);
 
+    const Servicios = await knex('Servicio').select('id');
 
     //Cargo Ordenes de Venta
     await knex("OrdenVenta").insert([
@@ -125,7 +126,7 @@ export async function seed(knex: Knex): Promise<void> {
             cantidad: 3,
             precio_unitario: 50.0,
             precio_total: 150.0,
-            servicio_id: "",
+            servicio_id: Servicios[0].id,
             fecha_creacion: knex.fn.now(),   
             fecha_actualizacion: knex.fn.now(),
             },
@@ -135,7 +136,7 @@ export async function seed(knex: Knex): Promise<void> {
             cantidad: 10,
             precio_unitario: 25.0,
             precio_total: 250.0,
-            servicio_id: "",
+            servicio_id: Servicios[1].id,
             fecha_creacion: knex.fn.now(),   
             fecha_actualizacion: knex.fn.now(),
             }
@@ -215,21 +216,21 @@ export async function seed(knex: Knex): Promise<void> {
     await knex("RenglonOrdenCompra").insert([
         {id: uuidv4(),
         orden_compra_id: OrdenesDeCompra[0].id,
-        producto_id: "",
+        producto_id: Productos[0].id,
         cantidad: 10,
         precio_unitario: 15.0,
         precio_total: 150.0,
-        servicio_id: "",
+        servicio_id: Servicios[0].id,
         fecha_creacion: knex.fn.now(),   
         fecha_actualizacion: knex.fn.now()
         },
         {id: uuidv4(),
         orden_compra_id: OrdenesDeCompra[1].id,
-        producto_id: "",
+        producto_id: Productos[1].id,
         cantidad: 10,
         precio_unitario: 15.0,
         precio_total: 150.0,
-        servicio_id: "",
+        servicio_id: Servicios[1].id,
         fecha_creacion: knex.fn.now(),   
         fecha_actualizacion: knex.fn.now()
         }

@@ -96,11 +96,11 @@ export async function up(knex: Knex): Promise<void> {
     .createTable('RenglonOrdenCompra', table => {
       table.uuid('id').primary();
       table.uuid('orden_compra_id').references('id').inTable('OrdenCompra');
-      table.string('producto_id'); // *1
+      table.uuid('producto_id').references('id').inTable('Producto');
       table.integer('cantidad');
       table.decimal('precio_unitario');
       table.decimal('precio_total');
-      table.string('servicio_id'); // *1
+      table.uuid('servicio_id').references('id').inTable('Servicio');
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
@@ -118,11 +118,11 @@ export async function up(knex: Knex): Promise<void> {
     .createTable('RenglonOrdenVenta', table => {
       table.uuid('id').primary();
       table.uuid('orden_venta_id').references('id').inTable('OrdenVenta');
-      table.string('producto_id'); // *1
+      table.uuid('producto_id').references('id').inTable('Producto');
       table.integer('cantidad');
       table.decimal('precio_unitario');
       table.decimal('precio_total');
-      table.string('servicio_id'); // *1
+      table.uuid('servicio_id').references('id').inTable('Servicio');
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     });
