@@ -30,12 +30,24 @@ export const filterProducts = async (filter: ProductoFiltro) => {
       query = query.where('nombre', 'like', `%${filter.nombre}%`);
     }
 
-    if (filter.precio_min !== undefined) {
-      query = query.where('precio', '>=', filter.precio_min);
+    if (filter.precio_unidad_min !== undefined) {
+      query = query.where('precio_unidad', '>=', filter.precio_unidad_min);
     }
 
-    if (filter.precio_max !== undefined) {
-      query = query.where('precio', '<=', filter.precio_max);
+    if (filter.precio_unidad_max !== undefined) {
+      query = query.where('precio_unidad', '<=', filter.precio_unidad_max);
+    }
+
+    if (filter.precio_contenedor_min !== undefined) {
+      query = query.where('precio_contenedor', '>=', filter.precio_contenedor_min);
+    }
+
+    if (filter.precio_contenedor_max !== undefined) {
+      query = query.where('precio_contenedor', '<=', filter.precio_contenedor_max);
+    }
+
+    if (filter.familia) {
+      query = query.where('familia', filter.familia);
     }
 
     if (filter.categoria_id) {
@@ -44,10 +56,6 @@ export const filterProducts = async (filter: ProductoFiltro) => {
 
     if (filter.proveedor_id) {
       query = query.where('proveedor_id', filter.proveedor_id);
-    }
-
-    if (filter.min_stock !== undefined) {
-      query = query.where('min_stock', '>=', filter.min_stock);
     }
 
     return await query;

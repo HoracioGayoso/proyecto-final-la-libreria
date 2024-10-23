@@ -7,8 +7,7 @@ import {
   filterProducts,
   addProduct,
   updateProduct,
-  deleteProduct,
-  getProductByCodigoBarra
+  deleteProduct
 } from '../controllers/products';
 
 const router = Router();

@@ -57,7 +57,7 @@ export async function up(knex: Knex): Promise<void> {
     })
     .createTable('Servicio', table => {
       table.uuid('id').primary();
-      table.uuid('client_id').references('id').inTable('Usuario');
+      table.uuid('cliente_id').references('id').inTable('Usuario');
       table.string('nombre');
       table.text('descripcion');
       table.decimal('precio');
@@ -85,23 +85,11 @@ export async function up(knex: Knex): Promise<void> {
     })
     .createTable('OrdenCompra', table => {
       table.uuid('id').primary();
-      table.uuid('proveedor_id').references('id').inTable('Proveedor');
       table.timestamp('fecha_orden');
-      table.enu('estado', ['PENDIENTE', 'PROCESANDO', 'RECIBIDO', 'CANCELADO']).defaultTo('PENDIENTE');
       table.decimal('montoTotal');
       table.enu('tipo_gasto', ['COMPRA', 'GASTO', 'INVERSION']).defaultTo('COMPRA');
+      table.string('motivo');
       table.text('descripcion');
-      table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
-      table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
-    })
-    .createTable('RenglonOrdenCompra', table => {
-      table.uuid('id').primary();
-      table.uuid('orden_compra_id').references('id').inTable('OrdenCompra');
-      table.string('producto_id'); // *1
-      table.integer('cantidad');
-      table.decimal('precio_unitario');
-      table.decimal('precio_total');
-      table.string('servicio_id'); // *1
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
@@ -109,7 +97,7 @@ export async function up(knex: Knex): Promise<void> {
       table.uuid('id').primary();
       table.uuid('cliente_id').references('id').inTable('Usuario');
       table.timestamp('fecha_orden');
-      table.enu('estado', ['PENDIENTE', 'PROCESANDO', 'COMPLETADO', 'CANCELADO']).defaultTo('PENDIENTE');
+      table.enu('estado', ['PENDIENTE', 'COMPLETADO', 'CANCELADO']).defaultTo('PENDIENTE');
       table.decimal('montoTotal');
       table.enu('tipo_venta', ['VENTA', 'DEVOLUCION']).defaultTo('VENTA');
       table.text('descripcion');
@@ -123,6 +111,7 @@ export async function up(knex: Knex): Promise<void> {
       table.integer('cantidad');
       table.decimal('precio_unitario');
       table.decimal('precio_total');
+      table.decimal('porcentaje_descuento_manual');
       table.string('servicio_id'); // *1
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
@@ -134,7 +123,6 @@ export async function down(knex: Knex): Promise<void> {
     await knex.schema
     .dropTableIfExists('RenglonOrdenVenta')
     .dropTableIfExists('OrdenVenta')
-    .dropTableIfExists('RenglonOrdenCompra')
     .dropTableIfExists('OrdenCompra')
     .dropTableIfExists('RenglonDetallePedido')
     .dropTableIfExists('Pedido')
