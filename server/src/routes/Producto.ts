@@ -1,4 +1,3 @@
-// ./src/routes/products.ts
 import { Router, Request, Response, NextFunction } from 'express';
 import authenticate from '../middlewares/auth';
 import {
@@ -8,10 +7,10 @@ import {
   addProduct,
   updateProduct,
   deleteProduct
-} from '../controllers/products';
+} from '../controllers/ProductoController';
 
 const router = Router();
-router.use(authenticate);
+//router.use(authenticate);
 
 // Obtener todos los productos
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
@@ -44,3 +43,4 @@ router.delete('/:codigo_barra', (req: Request, res: Response, next: NextFunction
 });
 
 export default router;
+ 

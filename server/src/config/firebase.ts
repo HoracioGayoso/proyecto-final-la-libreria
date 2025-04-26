@@ -4,5 +4,4 @@ import * as serviceAccount from '../config/serviceAccountKey.json'; // Ajusta la
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
 });
-
 export default admin;

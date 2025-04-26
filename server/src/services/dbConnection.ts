@@ -1,5 +1,6 @@
 import knex from 'knex';
-
+import config from '../../knexfile';
+/*
 const dbConnection = knex({
   client: 'pg',
   connection: process.env.NODE_ENV === 'test'
@@ -8,6 +9,8 @@ const dbConnection = knex({
   pool: {
     min: 0,
   },
-});
+});*/
+
+const dbConnection = knex(config['development']);
 
 export default dbConnection;

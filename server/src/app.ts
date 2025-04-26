@@ -4,6 +4,9 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
+import productoRouter  from './routes/Producto'; 
+import proveedorRouter from './routes/Proveedor';
+import categoriaRouter from './routes/Categoria';
 import cors from 'cors'; // Importa el paquete cors
 
 const app = express();
@@ -23,6 +26,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/index', indexRouter);
 app.use('/users', usersRouter);
+app.use('/productos', productoRouter);
+app.use('/proveedores', proveedorRouter);
+app.use('/categorias', categoriaRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use((req: Request, res: Response, next: NextFunction) => {

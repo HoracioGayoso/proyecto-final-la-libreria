@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import admin from '../config/firebase'; // Asegúrate de la ruta correcta
-import { DecodedIdToken } from '../types/express/index'; // Import the extended Request type
+import { DecodedIdToken } from '../@types/index'; // Import the extended Request type
 
 
 const authenticate = async (req: Request<any, any, any, any, { user?: DecodedIdToken }>, res: Response, next: NextFunction) => {

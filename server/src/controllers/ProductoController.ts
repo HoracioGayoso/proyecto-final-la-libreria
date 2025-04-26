@@ -1,7 +1,9 @@
-// ./src/controllers/products.ts
+ // ./src/controllers/products.ts
 import { Request, Response, NextFunction } from 'express';
 import * as databaseOperations from '../services/exportOperations';
 import { ProductoFiltro } from '../@types/controller';
+
+import { stringToUUID } from '../utils/uuidMapper';
 
 // Obtener todos los productos
 export const getAllProducts = async (req: Request, res: Response, next: NextFunction) => {
@@ -42,7 +44,9 @@ export const filterProducts = async (req: Request, res: Response, next: NextFunc
 // Agregar un nuevo producto
 export const addProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const newProduct = req.body;
+    
+    var newProduct = req.body;
+    newProduct.id = stringToUUID(req.body.codigo_barra);
     const [insertedProduct] = await databaseOperations.addProduct(newProduct);
     res.status(201).json(insertedProduct);
   } catch (error) {
