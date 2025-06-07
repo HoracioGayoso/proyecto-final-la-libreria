@@ -31,8 +31,7 @@ export async function up(knex: Knex): Promise<void> {
       table.string('nombre').notNullable();
       table.string('codigo_barra');
       table.text('descripcion');
-      table.decimal('precio');
-      table.integer('min_stock');
+      table.decimal('precio_unidad');
       table.uuid('categoria_id').references('id').inTable('Categoria');
       table.uuid('proveedor_id').references('id').inTable('Proveedor');
       table.string('imagen');
@@ -90,6 +89,17 @@ export async function up(knex: Knex): Promise<void> {
       table.enu('tipo_gasto', ['COMPRA', 'GASTO', 'INVERSION']).defaultTo('COMPRA');
       table.string('motivo');
       table.text('descripcion');
+      table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
+      table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
+    })
+    .createTable('RenglonOrdenCompra', table => {
+      table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+      table.uuid('orden_compra_id').references('id').inTable('OrdenCompra');
+      table.uuid('producto_id').references('id').inTable('Producto');
+      table.integer('cantidad');
+      table.decimal('precio_unitario');
+      table.decimal('precio_total');
+      table.uuid('servicio_id').nullable().references('id').inTable('Servicio');
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
