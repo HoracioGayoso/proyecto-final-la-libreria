@@ -1,9 +1,9 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import authenticate from '../middlewares/auth';
+import { Router, Request, Response } from 'express';
+
 const router = Router();
-router.use(authenticate);
-router.get('/', (req: Request, res: Response, next: NextFunction) => {
-  res.send('Hello World');
+
+router.get('/', (req: Request, res: Response) => {
+  res.json({ message: 'API is working' });
 });
 
-export default router;
+export default router; 

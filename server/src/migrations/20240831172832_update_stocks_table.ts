@@ -16,7 +16,7 @@ export async function up(knex: Knex): Promise<void> {
         table.integer('yellow_alert');
         table.integer('green_alert');
         
-        table.dropColumn('producto_id');
+        //table.dropColumn('producto_id');
       });
 }
 
