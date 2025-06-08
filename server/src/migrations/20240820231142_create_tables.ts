@@ -100,12 +100,17 @@ export async function up(knex: Knex): Promise<void> {
     })
     .createTable('OrdenVenta', table => {
       table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
-      table.uuid('cliente_id').references('id').inTable('Usuario');
+      table.uuid('usuario_id').references('id').inTable('Usuario');
       table.timestamp('fecha_orden');
       table.enu('estado', ['PENDIENTE', 'COMPLETADO', 'CANCELADO']).defaultTo('PENDIENTE');
       table.decimal('montoTotal');
       table.enu('tipo_venta', ['VENTA', 'DEVOLUCION']).defaultTo('VENTA');
       table.text('descripcion');
+      table.string('tipo_pago')
+      table.string('nombre_completo_cliente').nullable();
+      table.string('email_cliente').nullable();
+      table.string('telefono_cliente').nullable();
+      table.string('dni_cliente').nullable();
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })

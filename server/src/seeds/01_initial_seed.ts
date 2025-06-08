@@ -162,9 +162,9 @@ export async function seed(knex: Knex): Promise<void> {
   // OrdenVenta
   const ordenVentaIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('OrdenVenta').insert([
-    { id: ordenVentaIds[0], cliente_id: usuarioIds[0], fecha_orden: new Date(), estado: 'PENDIENTE', montoTotal: 200, tipo_venta: 'VENTA', descripcion: 'Venta de libros' },
-    { id: ordenVentaIds[1], cliente_id: usuarioIds[1], fecha_orden: new Date(), estado: 'COMPLETADO', montoTotal: 1500, tipo_venta: 'VENTA', descripcion: 'Venta de laptops' },
-    { id: ordenVentaIds[2], cliente_id: usuarioIds[2], fecha_orden: new Date(), estado: 'CANCELADO', montoTotal: 600, tipo_venta: 'DEVOLUCION', descripcion: 'Devolución de sillas' },
+    { id: ordenVentaIds[0], usuario_id: usuarioIds[0], fecha_orden: new Date(), estado: 'PENDIENTE', montoTotal: 200, tipo_venta: 'VENTA', descripcion: 'Venta de libros',tipo_pago: "Efectivo" },
+    { id: ordenVentaIds[1], usuario_id: usuarioIds[1], fecha_orden: new Date(), estado: 'COMPLETADO', montoTotal: 1500, tipo_venta: 'VENTA', descripcion: 'Venta de laptops',tipo_pago: "Efectivo" },
+    { id: ordenVentaIds[2], usuario_id: usuarioIds[2], fecha_orden: new Date(), estado: 'CANCELADO', montoTotal: 600, tipo_venta: 'DEVOLUCION', descripcion: 'Devolución de sillas',tipo_pago: "Efectivo" },
   ]);
 
   // RenglonOrdenVenta

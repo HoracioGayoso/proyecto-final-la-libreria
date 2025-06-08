@@ -19,4 +19,24 @@ export const updateOrdenVenta = async (id: string, updatedOrden: object): Promis
 
 export const deleteOrdenVenta = async (id: string): Promise<number> => {
   return await dbConnection('OrdenVenta').where({ id }).delete();
+};
+
+export const createVentaWithRenglones = async (ordenVenta: any, renglones: any[]) => {
+  return await dbConnection.transaction(async trx => {
+    // 1. Insert the sale
+    const [insertedOrden] = await trx('OrdenVenta').insert(ordenVenta).returning('*');
+
+    // 2. For each renglon
+    for (const renglon of renglones) {
+      renglon.orden_venta_id = insertedOrden.id;
+      await trx('RenglonOrdenVenta').insert(renglon);
+
+      // 3. Subtract stock
+      await trx('Producto')
+        .where({ id: renglon.producto_id })
+        .decrement('stock', renglon.cantidad);
+    }
+
+    return insertedOrden;
+  });
 }; 

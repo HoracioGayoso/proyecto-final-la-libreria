@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as databaseOperations from '../services/exportOperations';
 import { stringToUUID } from '../utils/uuidMapper';
+import { createVentaWithRenglones } from '../services/OrdenVentaRepository';
 
 export const getAllOrdenesVenta = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -27,10 +28,9 @@ export const getOrdenVentaById = async (req: Request, res: Response, next: NextF
 
 export const addOrdenVenta = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    var newOrden = req.body;
-    newOrden.id = stringToUUID(req.body.cliente_id + req.body.fecha_orden);
-    const [insertedOrden] = await databaseOperations.addOrdenVenta(newOrden);
-    res.status(201).json(insertedOrden);
+    const { ordenVenta, renglones } = req.body;
+    const result = await createVentaWithRenglones(ordenVenta, renglones);
+    res.status(201).json(result);
   } catch (error) {
     next(error);
   }
