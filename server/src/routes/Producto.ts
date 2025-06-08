@@ -12,6 +12,13 @@ import {
 const router = Router();
 //router.use(authenticate);
 
+
+// Filtrar productos por columna
+router.get('/filter', (req: Request, res: Response, next: NextFunction) => {
+  filterProducts(req, res, next);
+});
+
+
 // Obtener todos los productos
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
   getAllProducts(req, res, next);
@@ -22,10 +29,7 @@ router.get('/:codigo_barra', (req: Request, res: Response, next: NextFunction) =
   getProductByCodigoBarra(req, res, next);
 });
 
-// Filtrar productos por columna
-router.get('/filter', (req: Request, res: Response, next: NextFunction) => {
-  filterProducts(req, res, next);
-});
+
 
 // Agregar un nuevo producto
 router.post('/', (req: Request, res: Response, next: NextFunction) => {

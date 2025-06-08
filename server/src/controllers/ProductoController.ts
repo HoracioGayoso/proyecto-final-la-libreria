@@ -34,6 +34,8 @@ export const getProductByCodigoBarra = async (req: Request, res: Response, next:
 export const filterProducts = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const filter: ProductoFiltro = req.query;
+    console.log(filter);
+    console.log("Paso por aca");
     const products = await databaseOperations.filterProducts(filter);
     res.json(products);
   } catch (error) {
@@ -41,6 +43,17 @@ export const filterProducts = async (req: Request, res: Response, next: NextFunc
   }
 };
 
+export const filterProductsByAlert = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const filter: ProductoFiltro = req.query;
+    console.log(filter);
+    console.log("Paso por aca");
+    const products = await databaseOperations.filterProducts(filter);
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
+};
 // Agregar un nuevo producto
 export const addProduct = async (req: Request, res: Response, next: NextFunction) => {
   try {

@@ -32,6 +32,9 @@ export async function up(knex: Knex): Promise<void> {
       table.string('codigo_barra');
       table.text('descripcion');
       table.decimal('precio_unidad');
+      table.integer('stock');
+      table.integer('min_stock');
+      table.integer('porcentaje_ganancia');
       table.uuid('categoria_id').references('id').inTable('Categoria');
       table.uuid('proveedor_id').references('id').inTable('Proveedor');
       table.string('imagen');
@@ -39,18 +42,10 @@ export async function up(knex: Knex): Promise<void> {
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
-    .createTable('StockProducto', table => {
-      table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
-      table.uuid('producto_id').references('id').inTable('Producto');
-      table.integer('cantidad_contenedores');
-      table.integer('cantidad_por_contenedor');
-      table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
-      table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
-    })
     .createTable('AlertaStock', table => {
       table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
-      table.uuid('stock_id').references('id').inTable('StockProducto');
-      table.string('mensaje');
+      table.uuid('producto_id').references('id').inTable('Producto');
+      table.integer('stock');
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })

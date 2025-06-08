@@ -11,7 +11,6 @@ export async function seed(knex: Knex): Promise<void> {
   await knex('Pedido').del();
   await knex('Servicio').del();
   await knex('AlertaStock').del();
-  await knex('StockProducto').del();
   await knex('Producto').del();
   await knex('Categoria').del();
   await knex('Proveedor').del();
@@ -34,36 +33,90 @@ export async function seed(knex: Knex): Promise<void> {
   ]);
 
   // Categorias
-  const categoriaIds = [uuidv4(), uuidv4(), uuidv4()];
+  const categoriaIds = [uuidv4(), uuidv4(), uuidv4(),uuidv4(),uuidv4(),uuidv4(),uuidv4()];
   await knex('Categoria').insert([
-    { id: categoriaIds[0], nombre: 'Libros', descripcion: 'Libros de todo tipo' },
-    { id: categoriaIds[1], nombre: 'Tecnología', descripcion: 'Productos tecnológicos' },
-    { id: categoriaIds[2], nombre: 'Hogar', descripcion: 'Artículos para el hogar' },
+    { id: categoriaIds[0], nombre: 'Adhesivos', descripcion: 'Cintas,pegamentos,etc' },
+    { id: categoriaIds[1], nombre: 'Papeleria', descripcion: 'Hojas, blocks, etc' },
+    { id: categoriaIds[2], nombre: 'Utiles escolares', descripcion: 'Articulos para alumnos en edad escolar' },
+    { id: categoriaIds[3], nombre: 'Electronicos', descripcion: 'Calculadoras, pendrives,etc' },
+    { id: categoriaIds[4], nombre: 'Mochilas y cartucheras', descripcion: 'Mochilas y cartucheras escolares' },
+    { id: categoriaIds[5], nombre: 'Instrumentos de oficina', descripcion: 'Instrumentos de oficina (clips,chinchetas,organizadores,etc)' },
+    { id: categoriaIds[6], nombre: 'Insumos impresión', descripcion: 'Cartuchos de impresora, toner, tintas' },
   ]);
 
   // Productos
-  const productoIds = [uuidv4(), uuidv4(), uuidv4()];
-  await knex('Producto').insert([
-    { id: productoIds[0], nombre: 'El Quijote', codigo_barra: '1234567890123', descripcion: 'Novela clásica', precio_unidad: 100, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: 'quijote.jpg', activo: true },
-    { id: productoIds[1], nombre: 'Laptop', codigo_barra: '9876543210987', descripcion: 'Portátil moderna', precio_unidad: 1500, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[1], imagen: 'laptop.jpg', activo: true },
-    { id: productoIds[2], nombre: 'Silla', codigo_barra: '5555555555555', descripcion: 'Silla ergonómica', precio_unidad: 200, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[2], imagen: 'silla.jpg', activo: true },
-  ]);
+  const productos = [
+    { codigo_barra: '4015000090056', nombre: 'ADH EN BARRA VOLIBARRA 10gr. (30/360)', descripcion: 'Adhesivo en barra', precio_unidad: 243.41086, porcentaje_ganancia: 55, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 9, min_stock: 5 },
+    { codigo_barra: '7790400018608', nombre: 'ADH P.UNIPOX 100ml. UNIVERSAL (12/48)', descripcion: 'Adhesivo permanente', precio_unidad: 1029.18438, porcentaje_ganancia: 45, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 3, min_stock: 5 },
+    { codigo_barra: '4026700408157', nombre: 'ADH UHU COLA UNIVERSAL 125ml. (5/100)', descripcion: 'Adhesivo permanente', precio_unidad: 1710.92294, porcentaje_ganancia: 55, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 0, min_stock: 5 },
+    { codigo_barra: '6926341895409', nombre: 'AROS METAL N. 40 x100u .(5/20)', descripcion: 'Papeleria', precio_unidad: 4356.49114, porcentaje_ganancia: 80, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 15, min_stock: 3 },
+    { codigo_barra: '7792560463432', nombre: 'BLOCK OF. HUSARES ### x80h. 6331 (5/40)', descripcion: 'Papeleria', precio_unidad: 922.7408, porcentaje_ganancia: 55, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[2], imagen: null, activo: true, stock: 31, min_stock: 10 },
+    { codigo_barra: '7796569233227', nombre: 'BLOCK OF.TRIUNF. ### 80h (5/50)', descripcion: 'Papeleria', precio_unidad: 871.64697, porcentaje_ganancia: 55, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[2], imagen: null, activo: true, stock: 39, min_stock: 10 },
+    { codigo_barra: '70330172975', nombre: 'BOLIG BIC CRISTAL 0.7 x25u. (6) Color ROJO', descripcion: 'Utiles de escritura', precio_unidad: 4056.75538, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 33, min_stock: 20 },
+    { codigo_barra: '70330172982', nombre: 'BOLIG BIC CRISTAL 0.7 x25u. (6) Color NEGRO', descripcion: 'Utiles de escritura', precio_unidad: 4056.75538, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 25, min_stock: 20 },
+    { codigo_barra: '70330200234', nombre: 'BOLIG BIC CRISTAL 0.7 x25u. (6) Color AZUL', descripcion: 'Utiles de escritura', precio_unidad: 4056.75538, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 34, min_stock: 20 },
+    { codigo_barra: '70330200241', nombre: 'BOLIG BIC CRISTAL 0.7 x25u. (6) Color VERDE', descripcion: 'Utiles de escritura', precio_unidad: 4056.75538, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 55, min_stock: 20 },
+    { codigo_barra: '70330139503', nombre: 'BOLIG BIC BLIST. OPACO 1.0 x3u. A/N (50) ROJO', descripcion: 'Utiles de escritura', precio_unidad: 486.81071, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 87, min_stock: 20 },
+    { codigo_barra: '7033017658', nombre: 'BOLIG BIC BLIST. OPACO 1.0 x3u. A/N (50) NEGRO', descripcion: 'Utiles de escritura', precio_unidad: 486.81071, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 95, min_stock: 20 },
+    { codigo_barra: '70330176584', nombre: 'BOLIG BIC BLIST. OPACO 1.0 x3u. A/N (50) AZUL', descripcion: 'Utiles de escritura', precio_unidad: 486.81071, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 15, min_stock: 20 },
+    { codigo_barra: '70330176607', nombre: 'BOLIG BIC BLIST. OPACO 1.0 x3u. A/N (50) VERDE', descripcion: 'Utiles de escritura', precio_unidad: 486.81071, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 47, min_stock: 20 },
+    { codigo_barra: '4005400926215', nombre: 'BOLIG FABER TRILUX COLORS x12u. (48) Col...', descripcion: 'Utiles de escritura', precio_unidad: 898.13012, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 85, min_stock: 20 },
+    { codigo_barra: '4549526608933', nombre: 'CALCULADORA CIENT. CASIO FX-82LA PLUS 2', descripcion: 'Electronicos', precio_unidad: 8799.90263, porcentaje_ganancia: 55, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 3, min_stock: 2 },
+    { codigo_barra: '4549526607219', nombre: 'CALCULADORA CIENT. CASIO FX-82MS 2', descripcion: 'Electronicos', precio_unidad: 7583.1184, porcentaje_ganancia: 55, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[2], imagen: null, activo: true, stock: 0, min_stock: 2 },
+    { codigo_barra: '7795513177822', nombre: 'CAN FILGO LISBOA LISA', descripcion: 'Cartucheras', precio_unidad: 886.53179, porcentaje_ganancia: 70, categoria_id: categoriaIds[4], proveedor_id: proveedorIds[2], imagen: null, activo: false, stock: 50, min_stock: 3 },
+    { codigo_barra: '7792621083649', nombre: 'CAN FOOTY 2 CIE. BASQUET C/LUZ 17032', descripcion: 'Cartucheras', precio_unidad: 6782.776, porcentaje_ganancia: 70, categoria_id: categoriaIds[4], proveedor_id: proveedorIds[2], imagen: null, activo: false, stock: 43, min_stock: 3 },
+    { codigo_barra: '7792621128760', nombre: 'CAN FOOTY DESPL. 1 CIE. UNICORNIO 19024/54', descripcion: 'Cartucheras', precio_unidad: 7198.048, porcentaje_ganancia: 70, categoria_id: categoriaIds[4], proveedor_id: proveedorIds[2], imagen: null, activo: true, stock: 77, min_stock: 3 },
+    { codigo_barra: '7798160260633', nombre: 'CAN GOTCCI BRILLO C/VISOR 63 (55)', descripcion: 'Cartucheras', precio_unidad: 1935.91312, porcentaje_ganancia: 55, categoria_id: categoriaIds[4], proveedor_id: proveedorIds[2], imagen: null, activo: true, stock: 1, min_stock: 3 },
+    { codigo_barra: '7798160260749', nombre: 'CAN GOTCCI LONA TRIANGULAR 74 (88)', descripcion: 'Cartucheras', precio_unidad: 1130.0945, porcentaje_ganancia: 55, categoria_id: categoriaIds[4], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 91, min_stock: 3 },
+    { codigo_barra: '7798004930036', nombre: 'CARBONICO CARBOTYPE AZUL x 50', descripcion: 'Instrumentos de oficina', precio_unidad: 10523.0433, porcentaje_ganancia: 70, categoria_id: categoriaIds[5], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 51, min_stock: 2 },
+    { codigo_barra: '7798004930029', nombre: 'CARBONICO CARBOTYPE NEGRO x 50', descripcion: 'Instrumentos de oficina', precio_unidad: 10064.18952, porcentaje_ganancia: 70, categoria_id: categoriaIds[5], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 37, min_stock: 2 },
+    { codigo_barra: '6932653908881', nombre: 'CARP* A4 2A PVC COLOR (2x40) (30)', descripcion: 'Papeleria', precio_unidad: 1256.8633, porcentaje_ganancia: 55, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[2], imagen: null, activo: false, stock: 5, min_stock: 4 },
+    { codigo_barra: '7794765003521', nombre: 'CARP* A4 2A PVC COLOR (2x20/25) (50)', descripcion: 'Papeleria', precio_unidad: 1109.9572, porcentaje_ganancia: 55, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[2], imagen: null, activo: true, stock: 67, min_stock: 4 },
+    { codigo_barra: '7796191523406', nombre: 'CARP* CARTULINA A4 2 SOLAP. x25', descripcion: 'Papeleria', precio_unidad: 3046.19763, porcentaje_ganancia: 110, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[2], imagen: null, activo: false, stock: 79, min_stock: 5 },
+    { codigo_barra: '21001400728', nombre: 'CARP* POLIP. A4 10 FOLIOS', descripcion: 'Papeleria', precio_unidad: 528.41317, porcentaje_ganancia: 55, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 83, min_stock: 2 },
+    { codigo_barra: '7796893021965', nombre: 'CARTULINA COLOR x20u.', descripcion: 'Papeleria', precio_unidad: 1563.47004, porcentaje_ganancia: 75, categoria_id: categoriaIds[1], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 93, min_stock: 3 },
+    { codigo_barra: '7792533000956', nombre: 'CHINCHES SEÑALADOR GALERA BOL. x50', descripcion: 'Instrumentos de oficina', precio_unidad: 379.10341, porcentaje_ganancia: 55, categoria_id: categoriaIds[5], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 75, min_stock: 5 },
+    { codigo_barra: '7798047120685', nombre: 'CINTA/ADH. AUCA DUCT TAPE 48x9m.', descripcion: 'Cinta reforzada', precio_unidad: 1129.72303, porcentaje_ganancia: 70, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 45, min_stock: 3 },
+    { codigo_barra: '7794765000742', nombre: 'CINTA/ADH. CORTEFACIL x25m. TUBO x12u. (60)', descripcion: 'Cinta adhesiva comun', precio_unidad: 910.86925, porcentaje_ganancia: 100, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 59, min_stock: 3 },
+    { codigo_barra: '6945410412156', nombre: 'CINTA/ADH. ESPUMA STIKO 12x5m.', descripcion: 'Cinta adhesiva comun', precio_unidad: 248.42498, porcentaje_ganancia: 70, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 17, min_stock: 3 },
+    { codigo_barra: '635468112301', nombre: 'CINTA/ADH. MOTEX 12mmx30m. (24/288)', descripcion: 'Cinta adhesiva comun', precio_unidad: 114.52081, porcentaje_ganancia: 55, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 89, min_stock: 3 },
+    { codigo_barra: '7798047120128', nombre: 'CINTA/ADH. PAPEL AUCA 24x50m. (36)', descripcion: 'Cinta adhesiva comun', precio_unidad: 599.3003, porcentaje_ganancia: 70, categoria_id: categoriaIds[0], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 35, min_stock: 3 },
+    { codigo_barra: '6923794420783', nombre: 'CLASIFICADOR POLIPROP. A4 IRAM (12)', descripcion: 'Instrumentos de oficina', precio_unidad: 1624.2072, porcentaje_ganancia: 55, categoria_id: categoriaIds[5], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 49, min_stock: 5 },
+    { codigo_barra: '4716982060333', nombre: 'CLASIFICADOR POLIPROP. OFICIO (12)', descripcion: 'Instrumentos de oficina', precio_unidad: 1706.1, porcentaje_ganancia: 55, categoria_id: categoriaIds[5], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 19, min_stock: 6 },
+    { codigo_barra: '7796728000271', nombre: 'COM CARTUCHO P/EPSON T133 MAGENTA', descripcion: 'Cartucho de impresora', precio_unidad: 881.90028, porcentaje_ganancia: 80, categoria_id: categoriaIds[6], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 63, min_stock: 2 },
+    { codigo_barra: '6920620009082', nombre: 'COM CARTUCHO P/EPSON T133 NEGRO', descripcion: 'Cartucho de impresora', precio_unidad: 881.90028, porcentaje_ganancia: 80, categoria_id: categoriaIds[6], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 65, min_stock: 2 },
+    { codigo_barra: '6940843171793', nombre: 'COM CARTUCHO P/EPSON T133 CYAN', descripcion: 'Cartucho de impresora', precio_unidad: 881.90028, porcentaje_ganancia: 80, categoria_id: categoriaIds[6], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 13, min_stock: 2 },
+    { codigo_barra: '6926474634746', nombre: 'COM CARTUCHO P/EPSON T133 AMARILLO', descripcion: 'Cartucho de impresora', precio_unidad: 1067.56348, porcentaje_ganancia: 80, categoria_id: categoriaIds[6], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 53, min_stock: 2 },
+    { codigo_barra: '4710268258827', nombre: 'COM MOUSE GENIUS INALAMB. 8015', descripcion: 'Mouse Inalambrico', precio_unidad: 4346.58513, porcentaje_ganancia: 70, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 41, min_stock: 3 },
+    { codigo_barra: '8072018053011', nombre: 'COM PAD P/MOUSE GTC PAD-100', descripcion: 'Mousepad', precio_unidad: 380.2494, porcentaje_ganancia: 80, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 73, min_stock: 3 },
+    { codigo_barra: '8072021062901', nombre: 'COM PARLANTE GTC SPG-133', descripcion: 'Parlante Genius', precio_unidad: 4958.65841, porcentaje_ganancia: 70, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 81, min_stock: 5 },
+    { codigo_barra: '740617309720', nombre: 'COM PENDRIVE PLAST.  32GB SANDISK', descripcion: 'Pendrive 32gb', precio_unidad: 3267.40838, porcentaje_ganancia: 55, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 61, min_stock: 10 },
+    { codigo_barra: '91163251323', nombre: 'COM TECLADO GENIUS SLIMSTAR 230', descripcion: 'Teclado Genius', precio_unidad: 2907.3813, porcentaje_ganancia: 55, categoria_id: categoriaIds[3], proveedor_id: proveedorIds[1], imagen: null, activo: true, stock: 69, min_stock: 3 },
+    { codigo_barra: '7793198133010', nombre: 'COMPAS PIZZINI ESC.133 C/Estuche (20/240)', descripcion: 'Compás de dibujo técnico', precio_unidad: 669.67232, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[1], imagen: null, activo: false, stock: 27, min_stock: 10 },
+    { codigo_barra: '5993102218945', nombre: 'FSIA. REGLA COLOURS FLEXIBLE 15cm. 21894', descripcion: 'Regla flexible', precio_unidad: 256.0844, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 23, min_stock: 15 },
+    { codigo_barra: '4007817106525', nombre: 'GOMA STAEDTLER LAPIZ C/ESC. (12)', descripcion: 'Goma de borrar', precio_unidad: 843.39747, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[0], imagen: null, activo: true, stock: 30, min_stock: 40 },
+    { codigo_barra: '70330408982', nombre: 'LAPIZ GRAFITO BIC CONTE EVOLUTION x4u.', descripcion: 'Lapiz de dibujo ', precio_unidad: 362.58558, porcentaje_ganancia: 70, categoria_id: categoriaIds[2], proveedor_id: proveedorIds[0], imagen: null, activo: false, stock: 30, min_stock: 40 },
+  ];
+  const productoIds = Array.from({ length: productos.length }, () => uuidv4());
+  const productosConIds = productos.map((p, i) => ({
+    ...p,
+    id: productoIds[i]
+  }));
 
-  // StockProducto
-  const stockProductoIds = [uuidv4(), uuidv4(), uuidv4()];
-  await knex('StockProducto').insert([
-    { id: stockProductoIds[0], producto_id: productoIds[0], cantidad_contenedores: 10, cantidad_por_contenedor: 5 },
-    { id: stockProductoIds[1], producto_id: productoIds[1], cantidad_contenedores: 7, cantidad_por_contenedor: 3 },
-    { id: stockProductoIds[2], producto_id: productoIds[2], cantidad_contenedores: 20, cantidad_por_contenedor: 2 },
-  ]);
+  await knex('Producto').del();
+  await knex('Producto').insert(productosConIds);
+
+
 
   // AlertaStock
-  const alertaStockIds = [uuidv4(), uuidv4(), uuidv4()];
-  await knex('AlertaStock').insert([
-    { id: alertaStockIds[0], stock_id: stockProductoIds[0], mensaje: 'Stock bajo para El Quijote' },
-    { id: alertaStockIds[1], stock_id: stockProductoIds[1], mensaje: 'Stock bajo para Laptop' },
-    { id: alertaStockIds[2], stock_id: stockProductoIds[2], mensaje: 'Stock bajo para Silla' },
-  ]);
+  const alertaStock = productosConIds.map(p => ({
+    id: uuidv4(),
+    producto_id: p.id,
+    stock: p.stock,
+    fecha_creacion: new Date(),
+    fecha_actualizacion: new Date()
+  }));
+  await knex('AlertaStock').insert(alertaStock);
 
   // Servicios (use fake usuario IDs)
   

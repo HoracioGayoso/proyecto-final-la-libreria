@@ -37,6 +37,20 @@ export const filterProducts = async (filter: ProductoFiltro) => {
     if (filter.precio_unidad_max !== undefined) {
       query = query.where('precio_unidad', '<=', filter.precio_unidad_max);
     }
+    if (filter.alerta !== undefined) {
+      switch(filter.alerta) {
+        case 'amarilla':
+          query = query.where('stock', '>', 0).andWhere('stock', '<', dbConnection.ref('min_stock'));
+          break;
+        case 'roja':
+          query = query.where('stock', '=', 0);
+          break;  
+        default:
+          query = query.where('stock', '<', dbConnection.ref('min_stock'));
+          break;
+      } 
+    }
+
 
     if (filter.precio_contenedor_min !== undefined) {
       query = query.where('precio_contenedor', '>=', filter.precio_contenedor_min);
