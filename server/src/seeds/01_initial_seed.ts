@@ -108,7 +108,6 @@ export async function seed(knex: Knex): Promise<void> {
 
 
 
-  // AlertaStock
   const alertaStock = productosConIds.map(p => ({
     id: uuidv4(),
     producto_id: p.id,
@@ -118,7 +117,6 @@ export async function seed(knex: Knex): Promise<void> {
   }));
   await knex('AlertaStock').insert(alertaStock);
 
-  // Servicios (use fake usuario IDs)
   
   const servicioIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('Servicio').insert([
@@ -127,7 +125,7 @@ export async function seed(knex: Knex): Promise<void> {
     { id: servicioIds[2], cliente_id: usuarioIds[2], nombre: 'Garantía extendida', descripcion: 'Cobertura adicional', precio: 30 },
   ]);
 
-  // Pedidos
+
   const pedidoIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('Pedido').insert([
     { id: pedidoIds[0], cliente_id: usuarioIds[0], fecha_pedido: new Date(), estado: 'PENDIENTE', montoTotal: 200 },
@@ -135,7 +133,7 @@ export async function seed(knex: Knex): Promise<void> {
     { id: pedidoIds[2], cliente_id: usuarioIds[2], fecha_pedido: new Date(), estado: 'CANCELADO', montoTotal: 150 },
   ]);
 
-  // RenglonDetallePedido
+
   const renglonDetallePedidoIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('RenglonDetallePedido').insert([
     { id: renglonDetallePedidoIds[0], pedido_id: pedidoIds[0], producto_id: productoIds[0], cantidad: 2, precio_renglon: 200, precio_unitario: 100 },
@@ -143,7 +141,7 @@ export async function seed(knex: Knex): Promise<void> {
     { id: renglonDetallePedidoIds[2], pedido_id: pedidoIds[2], producto_id: productoIds[2], cantidad: 3, precio_renglon: 600, precio_unitario: 200 },
   ]);
 
-  // OrdenCompra
+
   const ordenCompraIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('OrdenCompra').insert([
     { id: ordenCompraIds[0], fecha_orden: new Date(), montoTotal: 500, tipo_gasto: 'COMPRA', motivo: 'Reposición', descripcion: 'Compra de libros' },
@@ -151,7 +149,7 @@ export async function seed(knex: Knex): Promise<void> {
     { id: ordenCompraIds[2], fecha_orden: new Date(), montoTotal: 400, tipo_gasto: 'INVERSION', motivo: 'Mobiliario', descripcion: 'Compra de sillas' },
   ]);
 
-  // RenglonOrdenCompra
+
   const renglonOrdenCompraIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('RenglonOrdenCompra').insert([
     { id: renglonOrdenCompraIds[0], orden_compra_id: ordenCompraIds[0], producto_id: productoIds[0], cantidad: 10, precio_unitario: 50, precio_total: 500 },
@@ -159,15 +157,15 @@ export async function seed(knex: Knex): Promise<void> {
     { id: renglonOrdenCompraIds[2], orden_compra_id: ordenCompraIds[2], producto_id: productoIds[2], cantidad: 2, precio_unitario: 200, precio_total: 400 },
   ]);
 
-  // OrdenVenta
-  const ordenVentaIds = [uuidv4(), uuidv4(), uuidv4()];
+
+  const ordenVentaIds = [1000,1001,1002];
   await knex('OrdenVenta').insert([
     { id: ordenVentaIds[0], usuario_id: usuarioIds[0], fecha_orden: new Date(), estado: 'PENDIENTE', montoTotal: 200, tipo_venta: 'VENTA', descripcion: 'Venta de libros',tipo_pago: "Efectivo" },
     { id: ordenVentaIds[1], usuario_id: usuarioIds[1], fecha_orden: new Date(), estado: 'COMPLETADO', montoTotal: 1500, tipo_venta: 'VENTA', descripcion: 'Venta de laptops',tipo_pago: "Efectivo" },
     { id: ordenVentaIds[2], usuario_id: usuarioIds[2], fecha_orden: new Date(), estado: 'CANCELADO', montoTotal: 600, tipo_venta: 'DEVOLUCION', descripcion: 'Devolución de sillas',tipo_pago: "Efectivo" },
   ]);
 
-  // RenglonOrdenVenta
+
   const renglonOrdenVentaIds = [uuidv4(), uuidv4(), uuidv4()];
   await knex('RenglonOrdenVenta').insert([
     { id: renglonOrdenVentaIds[0], orden_venta_id: ordenVentaIds[0], producto_id: productoIds[0], cantidad: 2, precio_unitario: 100, precio_total: 200, porcentaje_descuento_manual: 0, servicio_id: servicioIds[0] },

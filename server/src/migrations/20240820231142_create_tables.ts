@@ -23,6 +23,7 @@ export async function up(knex: Knex): Promise<void> {
       table.uuid('id').primary();
       table.string('nombre').notNullable();
       table.text('descripcion');
+      table.text('imagen');
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
@@ -99,7 +100,7 @@ export async function up(knex: Knex): Promise<void> {
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
     .createTable('OrdenVenta', table => {
-      table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+      table.increments('id').primary();
       table.uuid('usuario_id').references('id').inTable('Usuario');
       table.timestamp('fecha_orden');
       table.enu('estado', ['PENDIENTE', 'COMPLETADO', 'CANCELADO']).defaultTo('PENDIENTE');
@@ -111,18 +112,36 @@ export async function up(knex: Knex): Promise<void> {
       table.string('email_cliente').nullable();
       table.string('telefono_cliente').nullable();
       table.string('dni_cliente').nullable();
+      table.string('direccion_envio').nullable();
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     })
     .createTable('RenglonOrdenVenta', table => {
       table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
-      table.uuid('orden_venta_id').references('id').inTable('OrdenVenta');
-      table.string('producto_id'); // *1
+      table.increments('orden_venta_id').references('id').inTable('OrdenVenta');
+      table.string('producto_id'); 
       table.integer('cantidad');
       table.decimal('precio_unitario');
       table.decimal('precio_total');
       table.decimal('porcentaje_descuento_manual');
-      table.string('servicio_id'); // *1
+      table.string('servicio_id'); 
+      table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
+      table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
+    }).createTable('Promociones', table => {
+      table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+      table.string('nombre'); 
+      table.string('descripcion');
+      table.string('link');
+      table.string('imagen_desktop');
+      table.string('imagen_mobile');
+      table.boolean('estado');
+      table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
+      table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
+    }).createTable('Configuracion', table => {
+      table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
+      table.string('nombre');
+      table.string('descripcion');
+      table.string('valor');
       table.timestamp('fecha_creacion').defaultTo(knex.fn.now());
       table.timestamp('fecha_actualizacion').defaultTo(knex.fn.now());
     });
@@ -142,6 +161,8 @@ export async function down(knex: Knex): Promise<void> {
     .dropTableIfExists('Producto')
     .dropTableIfExists('Categoria')
     .dropTableIfExists('Proveedor')
-    .dropTableIfExists('Usuario');
+    .dropTableIfExists('Usuario')
+    .dropTableIfExists('Configuracion')
+    .dropTableIfExists('Promociones');
 }
 

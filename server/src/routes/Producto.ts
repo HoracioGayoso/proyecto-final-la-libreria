@@ -1,12 +1,15 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import authenticate from '../middlewares/auth';
+import upload from '../controllers/ProductoController';
+
 import {
   getAllProducts,
   getProductByCodigoBarra,
   filterProducts,
   addProduct,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  updateBatchPrices
 } from '../controllers/ProductoController';
 
 const router = Router();
@@ -31,17 +34,21 @@ router.get('/:codigo_barra', (req: Request, res: Response, next: NextFunction) =
 
 
 
-// Agregar un nuevo producto
-router.post('/', (req: Request, res: Response, next: NextFunction) => {
+
+router.post('/', upload.single('imagen'), (req: Request, res: Response, next: NextFunction) => {
   addProduct(req, res, next);
 });
 
-// Modificar un producto
-router.put('/:codigo_barra', (req: Request, res: Response, next: NextFunction) => {
+router.put('/batchPrecios', (req: Request, res: Response, next: NextFunction) => {
+  updateBatchPrices(req, res, next);
+});
+
+router.put('/modificarProducto/:codigo_barra', (req: Request, res: Response, next: NextFunction) => {
   updateProduct(req, res, next);
 });
 
-// Eliminar un producto
+
+
 router.delete('/:codigo_barra', (req: Request, res: Response, next: NextFunction) => {
   deleteProduct(req, res, next);
 });
