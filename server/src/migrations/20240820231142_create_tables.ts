@@ -31,11 +31,11 @@ export async function up(knex: Knex): Promise<void> {
       table.uuid('id').primary();
       table.string('nombre').notNullable();
       table.string('codigo_barra');
-      table.text('descripcion');
-      table.decimal('precio_unidad');
-      table.integer('stock');
-      table.integer('min_stock');
-      table.integer('porcentaje_ganancia');
+      table.text('descripcion').defaultTo('');
+      table.decimal('precio_unidad').defaultTo(0);
+      table.integer('stock').defaultTo(0);
+      table.integer('min_stock').defaultTo(0);
+      table.integer('porcentaje_ganancia').defaultTo(0);
       table.uuid('categoria_id').references('id').inTable('Categoria');
       table.uuid('proveedor_id').references('id').inTable('Proveedor');
       table.string('imagen');
@@ -107,7 +107,7 @@ export async function up(knex: Knex): Promise<void> {
       table.decimal('montoTotal');
       table.enu('tipo_venta', ['VENTA', 'DEVOLUCION']).defaultTo('VENTA');
       table.text('descripcion');
-      table.string('tipo_pago')
+      table.string('tipo_pago');
       table.string('nombre_completo_cliente').nullable();
       table.string('email_cliente').nullable();
       table.string('telefono_cliente').nullable();
