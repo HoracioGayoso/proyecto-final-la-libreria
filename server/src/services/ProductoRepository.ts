@@ -52,14 +52,6 @@ export const filterProducts = async (filter: ProductoFiltro) => {
     }
 
 
-    if (filter.precio_contenedor_min !== undefined) {
-      query = query.where('precio_contenedor', '>=', filter.precio_contenedor_min);
-    }
-
-    if (filter.precio_contenedor_max !== undefined) {
-      query = query.where('precio_contenedor', '<=', filter.precio_contenedor_max);
-    }
-
     if (filter.familia) {
       query = query.where('familia', filter.familia);
     }

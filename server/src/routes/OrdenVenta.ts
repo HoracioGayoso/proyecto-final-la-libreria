@@ -31,16 +31,16 @@ router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
 
 
 router.post('/create-payment', async (req: Request, res: Response, next: NextFunction) => {
-  const {product} = req.body;
-  if(!product || product.title || product.unit_price || product.quantity) {
+  if(!req.body.title || !req.body.unit_price || !req.body.quantity) {
     return res.status(400).json({ error: 'Ingrese todos los detalles del producto' });
   }
+  
   try {const paymentRes = await vexorInstance.pay.mercadopago({
     items: [{
-      title: product.title,
-      unit_price: product.unit_price,
-      quantity: product.quantity,
-      description: product.description || '',
+      title: req.body.title,
+      unit_price: req.body.unit_price,
+      quantity: req.body.quantity,
+      description: req.body.description || '',
     }],
   });
   res.status(200).json(paymentRes).json({payment_url:paymentRes.url});
