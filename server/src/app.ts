@@ -16,9 +16,21 @@ import renglonDetallePedidoRouter from './routes/RenglonDetallePedido';
 import ordenCompraRouter from './routes/OrdenCompra';
 import renglonOrdenCompraRouter from './routes/RenglonOrdenCompra';
 
+import * as vexor from 'vexor'; 
+import dotenv from 'dotenv'; 
+
 import cors from 'cors'; // Importa el paquete cors
 
+
+dotenv.config(); 
 const app = express();
+const {Vexor} = vexor;
+const vexorInstance = new Vexor({
+  publishableKey: 'process.env.NEXT_PUBLIC_VEXOR_PUBLISHABLE_KEY',
+  projectId: 'process.env.VEXOR_PROJECT',
+  secretKey: 'process.env.VEXOR_SECRET_KEY'
+});
+
 
 // Configura CORS
 const corsOptions = {
@@ -63,3 +75,4 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
 });
 
 export default app;
+export { vexorInstance }; 
