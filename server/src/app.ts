@@ -15,6 +15,7 @@ import pedidoRouter from './routes/Pedido';
 import renglonDetallePedidoRouter from './routes/RenglonDetallePedido';
 import ordenCompraRouter from './routes/OrdenCompra';
 import renglonOrdenCompraRouter from './routes/RenglonOrdenCompra';
+import reportRouter from './routes/Reporte';
 
 import * as vexor from 'vexor'; 
 import dotenv from 'dotenv'; 
@@ -59,6 +60,7 @@ app.use('/ordenes-compra', ordenCompraRouter);
 app.use('/renglones-orden-compra', renglonOrdenCompraRouter);
 app.use('/ordenes-venta', ordenVentaRouter);
 app.use('/renglones-orden-venta', renglonOrdenVentaRouter);
+app.use('/report', reportRouter);
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   const err = new Error('Not Found');

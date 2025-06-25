@@ -39,4 +39,20 @@ export const createVentaWithRenglones = async (ordenVenta: any, renglones: any[]
 
     return insertedOrden;
   });
+};
+
+export const getVentasDiarias = async (since: string, until: string) => {
+  
+  const ventas = await dbConnection('OrdenVenta')
+    .select(
+      dbConnection.raw("to_char(fecha_orden AT TIME ZONE 'America/Argentina/Buenos_Aires', 'YYYY-MM-DD') as fecha")
+    )
+    .sum({ total: 'montoTotal' })
+    .whereRaw('fecha_orden >= ?', [since])
+    .andWhereRaw('fecha_orden <= ?', [until])
+    .andWhere('estado', 'COMPLETADO')
+    .groupByRaw("to_char(fecha_orden AT TIME ZONE 'America/Argentina/Buenos_Aires', 'YYYY-MM-DD')")
+    .orderBy('fecha');
+
+  return ventas;
 }; 
